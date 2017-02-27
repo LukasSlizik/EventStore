@@ -10,6 +10,8 @@ namespace EventStore
     {
         static void Main(string[] args)
         {
+            Client c = new Client();
+            c.Test();
         }
     }
 }

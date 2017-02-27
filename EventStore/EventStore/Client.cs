@@ -9,7 +9,7 @@ namespace EventStore
 {
     public class Client
     {
-        public static void Main(string[] args)
+        public void Test()
         {
             var folderPath = "login";
             var blackBox = new FolderBlackBox(folderPath);
