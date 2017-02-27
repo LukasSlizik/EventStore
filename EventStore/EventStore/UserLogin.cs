@@ -1,4 +1,5 @@
-﻿using nblackbox.contract;
+﻿using EventStore.Events;
+using nblackbox.contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,14 +36,15 @@ namespace EventStore
         public void ChangePassword(string login, string oldPassword, string newPassword)
         {
             if (CanLogin(login, oldPassword))
-                _blackBox.Record(new Event("ChangePassword", login, newPassword));
+            {
+                var e = new ChangePasswordEvent(login, newPassword);
+                _blackBox.Record(new Event("ChangePassword", login, e.ToJson()));
+            }
         }
 
         public void Register(string login, string name, string password)
         {
-            // ist der login eindeutig
-            // ist das Passwort stark genug (nicht leer)
-            // enthält Login nur gültige Zeichen
+
             _blackBox.Record("Register", login, $"{name},{password}");
         }
     }
