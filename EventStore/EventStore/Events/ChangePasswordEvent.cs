@@ -1,20 +1,12 @@
-﻿using Newtonsoft.Json;
-
-namespace EventStore.Events
+﻿namespace EventStore.Events
 {
-    public class ChangePasswordEvent
+    public class ChangePasswordEvent : EventBase<ChangePasswordEvent>
     {
-        public string Login { get; set; }
+        public ChangePasswordEvent(string login, string newPassword) : base(login)
+        {
+            NewPassword = newPassword;
+        }
+
         public string NewPassword { get; set; }
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
-
-        public static ChangePasswordEvent FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<ChangePasswordEvent>(json);
-        }
     }
 }

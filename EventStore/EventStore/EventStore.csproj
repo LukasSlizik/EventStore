@@ -66,6 +66,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Events\ChangeUserNameEvent.cs" />
     <Compile Include="Events\ChangePasswordEvent.cs" />
+    <Compile Include="Events\EventBase.cs" />
     <Compile Include="Events\RegisterUserEvent.cs" />
     <Compile Include="IUserLogin.cs" />
     <Compile Include="Program.cs" />

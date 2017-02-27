@@ -1,21 +1,14 @@
-﻿using Newtonsoft.Json;
-
-namespace EventStore.Events
+﻿namespace EventStore.Events
 {
-    public class RegisterUserEvent
+    public class RegisterUserEvent : EventBase<RegisterUserEvent>
     {
-        public string Login { get; set; }
+        public RegisterUserEvent(string login, string userName, string password) : base(login)
+        {
+            UserName = userName;
+            Password = password;
+        }
+
         public string UserName { get; set; }
         public string Password { get; set; }
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
-
-        public static RegisterUserEvent FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<RegisterUserEvent>(json);
-        }
     }
 }

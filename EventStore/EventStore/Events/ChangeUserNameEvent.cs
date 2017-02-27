@@ -1,20 +1,12 @@
-﻿using Newtonsoft.Json;
-
-namespace EventStore.Events
+﻿namespace EventStore.Events
 {
-    public class ChangeUserNameEvent
+    public class ChangeUserNameEvent : EventBase<ChangeUserNameEvent>
     {
-        public string Login {get;set;}
+        public ChangeUserNameEvent(string login, string newUserName) : base(login)
+        {
+            NewUserName = newUserName;
+        }
+
         public string NewUserName { get; set; }
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
-
-        public static ChangeUserNameEvent FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<ChangeUserNameEvent>(json);
-        }
     }
 }
