@@ -30,7 +30,10 @@ namespace EventStore
         public void ChangeName(string login, string password, string newName)
         {
             if (CanLogin(login, password))
-                _blackBox.Record(new Event("ChangeName", login, newName));
+            {
+                var e = new ChangeUserNameEvent(login, newName);
+                _blackBox.Record(new Event("ChangeName", login, e.ToJson()));
+            }
         }
 
         public void ChangePassword(string login, string oldPassword, string newPassword)
@@ -44,8 +47,8 @@ namespace EventStore
 
         public void Register(string login, string name, string password)
         {
-
-            _blackBox.Record("Register", login, $"{name},{password}");
+            var e = new RegisterUserEvent(login, name, password);
+            _blackBox.Record("Register", login, e.ToJson());
         }
     }
 }
