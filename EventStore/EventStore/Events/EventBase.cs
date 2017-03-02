@@ -2,8 +2,10 @@
 
 namespace EventStore.Events
 {
-    public class EventBase<T>
+    public abstract class EventBase
     {
+        public abstract string Name { get; }
+
         public EventBase(string login)
         {
             Login = login;
@@ -16,9 +18,6 @@ namespace EventStore.Events
             return JsonConvert.SerializeObject(this);
         }
 
-        public static T FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<T>(json);
-        }
+        public abstract void PopulateFromJson(string json);
     }
 }

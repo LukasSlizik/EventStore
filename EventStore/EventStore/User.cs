@@ -1,39 +1,62 @@
-﻿using nblackbox.contract;
+﻿using EventStore.Events;
+using nblackbox.contract;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventStore
 {
-    class User
+    public class User
     {
-        public string login { get; set; }
-        public string password { get; set; }
-        public string name { get; set; }
+        static Dictionary<string, Func<IRecordedEvent, User, User>> actions = new Dictionary<string, Func<IRecordedEvent, User, User>>();
 
-        public static User Restore(IEnumerable<IRecordedEvent> events)
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public string Name { get; set; }
+
+        private void RegisterAction(string name, Func<IRecordedEvent, User, User> action)
+        {
+            actions.Add(name, action);
+        }
+
+        public User(string login, string name, string password)
+        {
+            Login = login;
+            Password = password;
+            Name = name;
+
+            RegisterActions();
+        }
+
+        private void RegisterActions()
+        {
+            RegisterAction("RegisterUser", (e, oldUser) =>
+            {
+                var data = JsonConvert.DeserializeObject<RegisterUserEvent>(e.Data);
+                return new User(data.Login, data.UserName, data.Password);
+            });
+
+            RegisterAction("ChangeUserName", (e, oldUser) =>
+            {
+                var data = JsonConvert.DeserializeObject<ChangeUserNameEvent>(e.Data);
+                return new User(oldUser.Login, data.NewUserName, oldUser.Password);
+            });
+
+            RegisterAction("ChangePassword", (e, oldUser) =>
+            {
+                var data = JsonConvert.DeserializeObject<ChangePasswordEvent>(e.Data);
+                return new User(oldUser.Login, oldUser.Name, data.NewPassword);
+            });
+        }
+
+        public static User RestoreFromEvents(IEnumerable<IRecordedEvent> events)
         {
             User user = null;
+
             foreach (var @event in events)
             {
-                if (@event.Name == "Register")
-                    user = new User() { login = @event.Context,
-                                        name = @event.Data.Split(',')[0],
-                                        password = @event.Data.Split(',')[1]};
-
-                if (@event.Name == "ChangeName")
-                {
-                    if (user == null) throw new InvalidOperationException("user not registered yet");
-                    user.name = @event.Data;
-                }
-
-                if (@event.Name == "ChangePassword")
-                {
-                    if (user == null) throw new InvalidOperationException("user not registered yet");
-                    user.password = @event.Data;
-                }
+                var a = actions[@event.Name];
+                user = a(@event, user);
             }
 
             return user;

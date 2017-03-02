@@ -20,8 +20,8 @@ namespace EventStore
         public bool CanLogin(string login, string password)
         {
             var eventsForLogin = _blackBox.Player.WithContext(login).Play();
-            var user = User.Restore(eventsForLogin);
-            if (user != null && user.password == password)
+            var user = User.RestoreFromEvents(eventsForLogin);
+            if (user != null && user.Password == password)
                 return true;
 
             return false;
@@ -48,7 +48,7 @@ namespace EventStore
         public void Register(string login, string name, string password)
         {
             var e = new RegisterUserEvent(login, name, password);
-            _blackBox.Record("Register", login, e.ToJson());
+            _blackBox.Record("RegisterUser", login, e.ToJson());
         }
     }
 }
