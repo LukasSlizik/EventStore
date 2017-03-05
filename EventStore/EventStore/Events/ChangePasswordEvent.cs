@@ -5,12 +5,14 @@ namespace EventStore.Events
 {
     public class ChangePasswordEvent : EventBase
     {
-        public ChangePasswordEvent(string login, string newPassword) : base(login)
+        public ChangePasswordEvent(string login, string newPassword)
         {
             NewPassword = newPassword;
+            Login = login;
         }
 
-        public override string Name => "ChangePassword";
+        public override string EventName => "ChangePassword";
+        public string Login { get; set; }
 
         public string NewPassword { get; set; }
 

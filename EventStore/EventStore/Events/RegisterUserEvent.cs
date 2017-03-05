@@ -5,16 +5,18 @@ namespace EventStore.Events
 {
     public class RegisterUserEvent : EventBase
     {
-        public override string Name => "RegisterUser";
+        public override string EventName => "RegisterUser";
 
-        public RegisterUserEvent(string login, string userName, string password) : base(login)
+        public RegisterUserEvent(string login, string userName, string password)
         {
             UserName = userName;
             Password = password;
+            Login = login;
         }
 
         public string UserName { get; set; }
         public string Password { get; set; }
+        public string Login { get; set; }
 
         public override void PopulateFromJson(string json)
         {

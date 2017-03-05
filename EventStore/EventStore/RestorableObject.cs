@@ -14,7 +14,7 @@ namespace EventStore
 
         public T RestoreFromEvents(IEnumerable<IRecordedEvent> events)
         {
-            T obj = new T();
+            T obj = default(T);
 
             foreach (var @event in events)
             {

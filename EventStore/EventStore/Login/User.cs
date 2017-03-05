@@ -1,7 +1,7 @@
 ﻿using EventStore.Events;
 using Newtonsoft.Json;
 
-namespace EventStore
+namespace EventStore.Login
 {
     public class User : RestorableObject<User>
     {

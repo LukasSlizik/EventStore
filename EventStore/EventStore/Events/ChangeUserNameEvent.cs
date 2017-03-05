@@ -5,14 +5,16 @@ namespace EventStore.Events
 {
     public class ChangeUserNameEvent : EventBase
     {
-        public override string Name => "ChangeUserName";
+        public override string EventName => "ChangeUserName";
 
-        public ChangeUserNameEvent(string login, string newUserName) : base(login)
+        public ChangeUserNameEvent(string login, string newUserName)
         {
             NewUserName = newUserName;
+            Login = login;
         }
 
         public string NewUserName { get; set; }
+        public string Login { get; set; }
 
         public override void PopulateFromJson(string json)
         {

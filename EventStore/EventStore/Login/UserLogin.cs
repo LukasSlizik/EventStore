@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventStore
+namespace EventStore.Login
 {
     public class UserLogin : IUserLogin
     {

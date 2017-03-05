@@ -68,12 +68,20 @@
     <Compile Include="Events\ChangePasswordEvent.cs" />
     <Compile Include="Events\EventBase.cs" />
     <Compile Include="Events\RegisterUserEvent.cs" />
-    <Compile Include="IUserLogin.cs" />
+    <Compile Include="Library\Events\BookCreated.cs" />
+    <Compile Include="Library\Events\BookLent.cs" />
+    <Compile Include="Library\Events\BookRemoved.cs" />
+    <Compile Include="Library\Events\LibraryManager.cs" />
+    <Compile Include="Library\Events\UserCreated.cs" />
+    <Compile Include="Library\Events\UserRemoved.cs" />
+    <Compile Include="Login\IUserLogin.cs" />
+    <Compile Include="Library\Entities\Book.cs" />
+    <Compile Include="Library\Entities\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestorableObject.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="UserLogin.cs" />
+    <Compile Include="Login\User.cs" />
+    <Compile Include="Login\UserLogin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
