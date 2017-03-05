@@ -20,7 +20,7 @@ namespace EventStore
         public bool CanLogin(string login, string password)
         {
             var eventsForLogin = _blackBox.Player.WithContext(login).Play();
-            var user = User.RestoreFromEvents(eventsForLogin);
+            var user = new User().RestoreFromEvents(eventsForLogin);
             if (user != null && user.Password == password)
                 return true;
 
