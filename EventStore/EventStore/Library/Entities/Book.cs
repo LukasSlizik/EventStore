@@ -12,21 +12,25 @@ namespace EventStore.Library.Entities
     {
         string BookName { get; set; }
 
-        public Book(){ }
-
-        public Book(string bookName)
+        public Book()
         {
-            BookName = bookName;
-
             RegisterActions();
         }
+
+        public Book(string bookName, BookStatus status) : this()
+        {
+            BookName = bookName;
+            Status = status;
+        }
+
+        public BookStatus Status { get; set; }
 
         private void RegisterActions()
         {
             RegisterAction("BookCreated", (e, oldBook) =>
             {
                 var data = JsonConvert.DeserializeObject<BookCreated>(e.Data);
-                return new Book(data.Title);
+                return new Book(data.Title, BookStatus.Home);
             });
 
             RegisterAction("BookRemoved", (e, oldBook) =>
@@ -37,8 +41,21 @@ namespace EventStore.Library.Entities
             RegisterAction("BookLent", (e, oldBook) =>
             {
                 var data = JsonConvert.DeserializeObject<BookLent>(e.Data);
-                return new Book(data.BookTitle);
+                return new Book(data.BookTitle, BookStatus.Lent);
+
+            });
+
+            RegisterAction("BookReturned", (e, oldBook) =>
+            {
+                var data = JsonConvert.DeserializeObject<BookReturned>(e.Data);
+                return new Book(data.BookTitle, BookStatus.Home);
             });
         }
+    }
+
+    public enum BookStatus
+    {
+        Home,
+        Lent
     }
 }

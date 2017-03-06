@@ -35,6 +35,8 @@ namespace EventStore
             //mngr.CreateBook("Harry Potter");
             //mngr.CreateBook("Herr der Ringe");
             mngr.LendBook("Game of Thrones", "Lukas");
+            //mngr.LendBook("Harry Potter", "Paul");
+            mngr.LendBook("Harry Potter", "Lukas");
 
         }
     }

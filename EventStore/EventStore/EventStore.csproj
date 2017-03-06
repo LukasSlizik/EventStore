@@ -71,6 +71,7 @@
     <Compile Include="Library\Events\BookCreated.cs" />
     <Compile Include="Library\Events\BookLent.cs" />
     <Compile Include="Library\Events\BookRemoved.cs" />
+    <Compile Include="Library\Events\BookReturned.cs" />
     <Compile Include="Library\Events\LibraryManager.cs" />
     <Compile Include="Library\Events\UserCreated.cs" />
     <Compile Include="Library\Events\UserRemoved.cs" />

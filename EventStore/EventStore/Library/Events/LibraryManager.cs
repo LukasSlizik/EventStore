@@ -43,19 +43,19 @@ namespace EventStore.Library.Events
 
         public void LendBook(string bookTitle, string userName)
         {
-            if (!BookExists(bookTitle))
+            if (!IsBookAvailable(bookTitle))
                 return;
 
             var e = new BookLent(bookTitle, userName);
             _blackBox.Record("BookLent", bookTitle, e.ToJson());
         }
 
-        private bool BookExists(string bookTitle)
+        private bool IsBookAvailable(string bookTitle)
         {
             var bookEvents = _blackBox.Player.WithContext(bookTitle).Play();
             var book = new Book().RestoreFromEvents(bookEvents);
 
-            if (book == null)
+            if (book == null || book.Status == BookStatus.Lent)
                 return false;
 
             return true;
