@@ -1,0 +1,27 @@
+﻿<Window x:Class="LibraryManager.Dialogs.AddBookView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryManager.Dialogs"
+        mc:Ignorable="d"
+        Title="AddBookDialog" Height="100" Width="300">
+    <Window.DataContext>
+        <local:AddBookViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Margin="5">Buchtitel</TextBlock>
+            <TextBox Width="200" Margin="5" Text="{Binding BookTitle}" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Width="100" Margin="5">OK</Button>
+            <Button Width="100" Margin="5">Abbrechen</Button>
+        </StackPanel>
+    </Grid>
+</Window>
